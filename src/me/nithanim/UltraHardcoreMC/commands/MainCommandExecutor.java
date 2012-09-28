@@ -107,7 +107,7 @@ public class MainCommandExecutor extends BasicCommandExecutor
 		
 	}
 	
-	@Command(needsPlayer = true)
+	@Command(needsPlayer = true, maxArgs=-1)
 	public void team(CommandSender sender, List<String> args)
 	{
 		if(plugin.getConfig().getBoolean("spawn.teams.enabled"))

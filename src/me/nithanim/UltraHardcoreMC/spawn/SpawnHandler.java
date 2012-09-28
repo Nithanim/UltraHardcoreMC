@@ -74,6 +74,9 @@ public class SpawnHandler {
 		
 		
 		p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 50, 10));
+		
+		
+		pspawn.getLocation().getBlock().getChunk().load();
 		p.teleport(pspawn.getLocation());
 		return true;
 	}

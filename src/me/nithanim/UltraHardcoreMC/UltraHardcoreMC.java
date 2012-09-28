@@ -164,6 +164,8 @@ public class UltraHardcoreMC extends JavaPlugin {
 		conf.addDefault("spawn.autoTele", true);
 		conf.addDefault("spawn.clearInventory", false);
 		
+		conf.addDefault("spawn.teams.enabled", true);
+		
 		conf.addDefault("respawn.gocreative", false);
 		conf.addDefault("respawn.banOnQuit", false);
 		conf.addDefault("respawn.tpworld", false);

@@ -35,7 +35,7 @@ public abstract class BasicCommandExecutor
 				
 				if(m.getName().equals(firstArg)) //is the method is responsible for issued command?
 				{
-					
+					args.remove(0); //already processed first arg
 					if(hasValidArgs(a, args)) //provided the sender enough arguments? This is only here because of CommandException
 					{
 						try
@@ -43,7 +43,6 @@ public abstract class BasicCommandExecutor
 							if(hasPermission(sender, a, args)) //should maybe swap place with hasValidArgs()
 							{
 								try {
-									args.remove(0); //already processed first arg
 									m.invoke(this, sender, args); //run!
 								}
 								catch (Exception e) {
@@ -143,12 +142,12 @@ public abstract class BasicCommandExecutor
 	
 	private static boolean hasValidArgs(Command ann, List<String> args)
 	{
-		int numargs = args.size()-1; //don't count command itself
+		int numargs = args.size(); //don't count command itself
 		
 		int maxargs = ann.maxArgs();
 		int minargs = ann.minArgs();
 		
-		if(maxargs < minargs)
+		if(maxargs != -1 && maxargs < minargs)
 			maxargs = minargs;		
 		
 		

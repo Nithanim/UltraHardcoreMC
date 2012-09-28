@@ -1,5 +1,6 @@
 package me.nithanim.UltraHardcoreMC.commands;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
@@ -56,32 +57,34 @@ public class TeamCommandExecutor extends BasicCommandExecutor {
 	public void join(CommandSender sender, List<String> args)
 	{
 		Player p = (Player)sender;
+		Team t = sh.getPlayerTeam(p.getName());
 		
-		if(args.size() == 1)
+		if(t == null) //player is not in a team
 		{
-			if(!sh.isInTeam(p.getName()))
+			Team lt = sh.getTeamFromLeader(args.get(0)); //LeaderTeam
+			
+			if(lt != null) //targetted player is leader of a team
 			{
-				Team t = sh.getTeamFromLeader(args.get(1)); //FIXIT name is case sensitive!
-				
-				if(t != null)
-				{
-					t.addPlayer(p.getName());
-					p.sendMessage("Successfully joined team of " + t.getLeader() + '!');
-				}
-				else
-				{
-					p.sendMessage(args.get(1) + " has no team!");
-				}
+				lt.addPlayer(p.getName());
+				p.sendMessage("Successfully joined team of " + lt.getLeader() + '!');
 			}
 			else
 			{
-				p.sendMessage("You are already in a team!");
+				p.sendMessage(args.get(0) + " is not a teamleader!");
 			}
 		}
-		else
+		else //player is in a team
 		{
-			p.sendMessage("Too less/much args!");
+			if(p.getName().equals(t.getLeader()))
+			{
+				p.sendMessage("You are already a leader of a team!");
+			}
+			else
+			{
+				p.sendMessage("You are already in the team of " + t.getLeader() + '!');
+			}
 		}
+		
 	}
 	
 	@Command(needsPlayer = true, help="Leave a team.")
@@ -100,7 +103,19 @@ public class TeamCommandExecutor extends BasicCommandExecutor {
 			}
 			else //remove team
 			{
+				//remove leader from team-list to be able to send separate messages
+				Iterator<String> pit = t.getPlayers().iterator();
+				while(pit.hasNext())
+				{
+					if(pit.next().equals(t.getLeader()))
+					{
+						pit.remove();
+						break;
+					}
+				}
+				
 				sh.sendTeamMessage(t, t.getLeader() + " removed the team!");
+				plugin.getServer().getPlayer(t.getLeader()).sendMessage("You removed your team!");
 				sh.removeTeam(t.getLeader());
 			}
 		}
