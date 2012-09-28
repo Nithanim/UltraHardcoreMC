@@ -1,6 +1,5 @@
 package me.nithanim.UltraHardcoreMC;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ import me.nithanim.UltraHardcoreMC.tasks.RepeatingSyncTask;
 
 import org.bukkit.Material;
 import org.bukkit.Server;
-import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -73,11 +71,7 @@ public class UltraHardcoreMC extends JavaPlugin {
 		
 		
 		//init command handler
-		PluginCommand command = getCommand("ultrahardcore");
-		
-		String[] aliases = {"uh", "uhc", "ultrahardcore"};
-		command.setAliases(Arrays.asList(aliases));
-		command.setExecutor(new DowngradeCommandExecutor(this));
+		getCommand("ultrahardcore").setExecutor(new DowngradeCommandExecutor(this));
 		
 		//recipes
 		Server server = getServer();

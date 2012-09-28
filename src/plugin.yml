@@ -1,5 +1,9 @@
 name: UltraHardcoreMC
 main: me.nithanim.UltraHardcoreMC.UltraHardcoreMC
 version: 0.5
-load: startup
 author: Nithanim
+commands:
+    ultrahardcoremc:
+        aliases: [uh, uhc, ultrahardcore]
+        description: Main command for the UltraHardcoreMC plugin
+        usage: /<command>
