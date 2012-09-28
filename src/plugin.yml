@@ -1,0 +1,5 @@
+name: UltraHardcoreMC
+main: me.nithanim.UltraHardcoreMC.UltraHardcoreMC
+version: 0.5
+load: startup
+author: Nithanim
