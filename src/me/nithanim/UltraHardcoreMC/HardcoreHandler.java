@@ -53,23 +53,23 @@ public class HardcoreHandler {
 	
 	/**
 	 * Starts countdown as requested by a gamemaster/console
-	 * @param min Minutes until game schould start
+	 * @param secUntilStart Seconds until game should start
 	 * @return true on success
 	 * @throws IllegalStateException 
 	 */
-	public boolean startCountdown(int min)
+	public boolean startCountdown(int secUntilStart)
 	{
 		if(getMemory().getInt("game.state") == Gamestate.NONE.ordinal())
 		{
 			getMemory().set("game.state", Gamestate.COUNTDOWN.ordinal());
 			
 			
-			if(min > 0)
+			if(secUntilStart > 0)
 			{
 				//start the countdown
-				countdownTask = new RepeatingSyncTask(plugin, new CountdownRunnable(min), 0, 1*20 /*every second*/);
+				countdownTask = new RepeatingSyncTask(plugin, new CountdownRunnable(secUntilStart), 0, 1*20);
 			}
-			else if(min == 0)
+			else if(secUntilStart == 0)
 			{
 				//skip countdown and start now!
 				startGame();

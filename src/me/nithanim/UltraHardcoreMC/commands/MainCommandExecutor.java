@@ -122,14 +122,41 @@ public class MainCommandExecutor extends BasicCommandExecutor
 		
 	}
 	
-	@Command(permissions={"ultrahardcoremc.gamemaster"}, help="Starts a new UHC game.", minArgs = 1, args="<delay in minutes> - if 0 the game will immediately start")
+	@Command(permissions={"ultrahardcoremc.gamemaster"}, help="Starts a new UHC game.", minArgs = 1, args="<delay><s|m|h> - if 0 the game will immediately start. e.g. 5m, 1m, 30s, ...")
 	public void start(CommandSender sender, List<String> args)
 	{
 		try
 		{
-			if(!plugin.getHandler().startCountdown(Integer.parseInt(args.get(0)))) //no success needed because of server msg
+			StringBuilder sb = new StringBuilder(args.get(0));
+			int multiplier = 1;
+			
+			switch(sb.charAt(sb.length()-1)) //find out about timemeasurement
 			{
-				sender.sendMessage("Unable to start game! Is is already running?");
+				case 's':
+					break;
+				case 'm':
+					multiplier = 60;
+					break;
+				case 'h':
+					multiplier = 60 * 60;
+					break;
+				default:
+					sender.sendMessage("You need to specify a valid timemeasurement!");
+					return;
+			}
+			
+			try
+			{
+				int timeInSec = Integer.parseInt(sb.substring(0, sb.length()-1)) * multiplier;
+				
+				if(!plugin.getHandler().startCountdown(timeInSec)) //no success needed because of server msg
+				{
+					sender.sendMessage("Unable to start game! Is is already running?");
+				}
+			}
+			catch(NumberFormatException e)
+			{
+				sender.sendMessage("Unable to read time correctly");
 			}
 		}
 		catch(Exception e)

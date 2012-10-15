@@ -13,11 +13,11 @@ public class CountdownRunnable implements Runnable {
 	
 	private long lastShout;
 	
-	public CountdownRunnable(long minutesToGo) {
+	public CountdownRunnable(long secToGo) {
 		long currtime = System.currentTimeMillis() / 1000;
 		
 		this.plugin = UltraHardcoreMC.getPlugin();
-		this.gamestarttime = currtime + minutesToGo * 60; //future (unix)timestamp when game starts
+		this.gamestarttime = currtime + secToGo; //future (unix)timestamp when game starts
 		
 		lastShout = 0;
 		run();
