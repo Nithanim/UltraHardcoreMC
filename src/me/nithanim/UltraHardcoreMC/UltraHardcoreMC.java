@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-import me.nithanim.UltraHardcoreMC.commands.DowngradeCommandExecutor;
+import me.nithanim.UltraHardcoreMC.commands.CommandManager;
 import me.nithanim.UltraHardcoreMC.listeners.HardcoreListener;
 import me.nithanim.UltraHardcoreMC.listeners.WorldListener;
 import me.nithanim.UltraHardcoreMC.listeners.PlayerlistListener;
@@ -71,7 +71,7 @@ public class UltraHardcoreMC extends JavaPlugin {
 		
 		
 		//init command handler
-		getCommand("ultrahardcore").setExecutor(new DowngradeCommandExecutor(this));
+		getCommand("ultrahardcore").setExecutor(new CommandManager(this));
 		
 		//recipes
 		Server server = getServer();
